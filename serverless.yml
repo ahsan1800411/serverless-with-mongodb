@@ -1,0 +1,28 @@
+service: serverless-mongodb
+frameworkVersion: '3'
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  memorySize: 128
+  region: us-west-1
+  stage: dev
+
+functions:
+  createUser:
+    handler: src/handlers/createUser.handler
+    events:
+      - httpApi:
+          path: /users
+          method: POST
+  getSingleUser:
+    handler: src/handlers/getSingleUser.handler
+    events:
+      - httpApi:
+          path: /users/{id}
+          method: GET
+# serverless plugin install -n serverless-offline
